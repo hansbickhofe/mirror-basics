@@ -6,7 +6,7 @@ using Mirror;
 using UnityEngine;
 
 namespace Mirror {
-    public class main : MonoBehaviour {
+    public class main : NetworkBehaviour {
 
         public NetworkManager NetMngr;
         Dictionary<string, DiscoveryInfo> m_discoveredServers = new Dictionary<string, DiscoveryInfo> ();
