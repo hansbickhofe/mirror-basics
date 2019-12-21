@@ -100,6 +100,8 @@ public class main : MonoBehaviour {
 
     void DisconnectFromGame () {
         print ("DisconnectFromGame");
+        NetworkManager.singleton.StopClient ();
+        NetworkManager.singleton.StopHost ();
     }
 
     void OnDiscoveredServer (DiscoveryInfo info) {
