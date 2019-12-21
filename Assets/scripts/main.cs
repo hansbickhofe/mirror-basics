@@ -12,6 +12,9 @@ public class main : MonoBehaviour {
 
     string[] m_gameName = { "Alpha", "Beta", "Gamma", "Delta" };
 
+    bool serverStarted = false;
+    bool clientStarted = false;
+
     void OnEnable () {
         NetworkDiscovery.onReceivedServerResponse += OnDiscoveredServer;
     }
@@ -30,8 +33,9 @@ public class main : MonoBehaviour {
     void Update () {
         if (!NetMngr) return;
         // if (!isLocalPlayer) return;
-        if (Input.GetKeyDown ("s")) StartServer ();
-        if (Input.GetKeyDown ("r")) RefreshServerList ();
+        if (Input.GetKeyDown ("s") && clientStarted == false) StartServer ();
+
+        if (Input.GetKeyDown ("r") && serverStarted == false) RefreshServerList ();
         if (Input.GetKeyDown ("c")) ConnectToFirstServer ();
         if (Input.GetKeyDown ("d")) DisconnectFromGame ();
     }
@@ -44,6 +48,7 @@ public class main : MonoBehaviour {
                 // LAN Host
                 m_discoveredServers.Clear ();
                 NetworkManager.singleton.StartHost ();
+                serverStarted = true;
 
                 // Wire in broadcaster pipeline here
                 GameBroadcastPacket gameBroadcastPacket = new GameBroadcastPacket ();
@@ -67,7 +72,7 @@ public class main : MonoBehaviour {
             print ("Info " + info.unpackedData.serverGUID);
             print ("Info " + info.unpackedData.hostName);
             print ("Info " + info.unpackedData.serverAddress);
-            
+
             for (int i = 0; i < m_headerNames.Length; i++) {
                 if (i == 0) {
                     print ("server Name: " + info.unpackedData.hostName + " " + " GUID: " + info.unpackedData.serverGUID +
