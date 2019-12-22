@@ -53,13 +53,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-master\Data\DiscoveryInfo.cs" />
-     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-master\Data\GameBroadcastPacket.cs" />
-     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-master\NetworkDiscovery.cs" />
-     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-master\Utility\ByteStreamer.cs" />
-     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-master\Utility\IPAddressUtility.cs" />
-     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-master\Utility\NetworkDiscoveryHUD.cs" />
-     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-master\Utility\NetworkDiscoveryUtility.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-fork\Data\DiscoveryInfo.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-fork\Data\GameBroadcastPacket.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-fork\NetworkDiscovery.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-fork\Utility\ByteStreamer.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-fork\Utility\IPAddressUtility.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-fork\Utility\NetworkDiscoveryHUD.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-fork\Utility\NetworkDiscoveryUtility.cs" />
      <Compile Include="Assets\scripts\main.cs" />
      <None Include="Assets\Mirror\Readme.txt" />
      <None Include="Assets\Mirror\License.txt" />

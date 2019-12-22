@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class main : MonoBehaviour {
 
-    public NetworkManager NetMngr;
     Dictionary<string, DiscoveryInfo> m_discoveredServers = new Dictionary<string, DiscoveryInfo> ();
     string[] m_headerNames = new string[] { "IP", "Host" };
 
@@ -25,19 +24,23 @@ public class main : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start () {
-        m_discoveredServers.Clear ();
-        NetworkDiscovery.instance.ClientRunActiveDiscovery ();
+        if (NetworkManager.singleton == null) {
+            return;
+        }
+        if (NetworkServer.active || NetworkClient.active) {
+            return;
+        }
+        if (!NetworkDiscovery.SupportedOnThisPlatform) {
+            return;
+        }
     }
 
     // Update is called once per frame
     void Update () {
-        if (!NetMngr) return;
-        // if (!isLocalPlayer) return;
         if (Input.GetKeyDown ("s") && clientStarted == false) StartServer ();
-
         if (Input.GetKeyDown ("r") && serverStarted == false) RefreshServerList ();
-        if (Input.GetKeyDown ("c")) ConnectToFirstServer ();
-        if (Input.GetKeyDown ("d")) DisconnectFromGame ();
+        if (Input.GetKeyDown ("c") && serverStarted == false) ConnectToFirstServer ();
+        if (Input.GetKeyDown ("d") && (serverStarted == true || clientStarted == true)) DisconnectFromGame ();
     }
 
     void StartServer () {
@@ -64,10 +67,12 @@ public class main : MonoBehaviour {
         }
     }
 
-    void RefreshServerList () {
+    void sendBroadcast () {
         NetworkDiscovery.instance.ClientRunActiveDiscovery ();
-        print ("RefreshServerList");
+    }
 
+    void RefreshServerList () {
+        print ("RefreshServerList");
         foreach (var info in m_discoveredServers.Values) {
             print ("Info " + info.unpackedData.serverGUID);
             print ("Info " + info.unpackedData.hostName);
@@ -80,13 +85,12 @@ public class main : MonoBehaviour {
                 }
             }
         }
-
         m_discoveredServers.Clear ();
     }
 
     void ConnectToFirstServer () {
         print ("ConnectToFirstServer ");
-
+        NetworkDiscovery.instance.StopAllCoroutines ();
         if (NetworkManager.singleton == null ||
             Transport.activeTransport == null) {
             return;
@@ -100,12 +104,16 @@ public class main : MonoBehaviour {
 
     void DisconnectFromGame () {
         print ("DisconnectFromGame");
-        NetworkManager.singleton.StopClient ();
-        NetworkManager.singleton.StopHost ();
+        NetworkDiscovery.instance.StopAllCoroutines ();
+        if (!NetworkServer.active) NetworkManager.singleton.StopClient ();
+        else NetworkManager.singleton.StopHost ();
+        serverStarted = false;
+        clientStarted = false;
     }
 
     void OnDiscoveredServer (DiscoveryInfo info) {
         // Note that you can check the versioning to decide if you can connect to the server or not using this method
         m_discoveredServers[info.unpackedData.serverGUID] = info;
+        RefreshServerList ();
     }
 }
