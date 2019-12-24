@@ -27,7 +27,7 @@ namespace Mirror {
         }
 
         void Awake () {
-            InvokeRepeating(nameof(Refresh),0,3);
+            InvokeRepeating (nameof (Refresh), 0, 3);
         }
 
         void Update () {
@@ -39,6 +39,7 @@ namespace Mirror {
 
         void StartServer () {
             print ("StartServer");
+            CancelInvoke ();
             int serverNum = (Random.Range (0, 4));
             if (!NetworkClient.isConnected && !NetworkServer.active) {
                 if (!NetworkClient.active) {
@@ -60,6 +61,7 @@ namespace Mirror {
             // NetworkDiscovery.singleton.StopAllCoroutines ();
             if (!NetworkServer.active) NetworkManager.singleton.StopClient ();
             else NetworkManager.singleton.StopHost ();
+            InvokeRepeating (nameof (Refresh), 0, 3);
         }
 
         public void DisplayServers () {
@@ -76,7 +78,7 @@ namespace Mirror {
         }
 
         public void Refresh () {
-            print("refresh");
+            print ("refresh");
             m_discoveredServers.Clear ();
             m_timeWhenRefreshed = Time.realtimeSinceStartup;
             NetworkDiscovery.SendBroadcast ();
