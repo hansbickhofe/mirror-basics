@@ -509,10 +509,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1282001517}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 991ed27b36cc3c244b9e83f6f985b2c5, type: 3}
+  m_Script: {fileID: 11500000, guid: ac6f7054767828944b4fd0b14de503e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refreshInterval: 3
+  offsetX: 5
+  offsetY: 150
+  width: 500
+  height: 400
 --- !u!114 &1282001523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,11 +525,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1282001517}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f3046f9e67f3ca4db971282a4a379bb, type: 3}
+  m_Script: {fileID: 11500000, guid: ec5071a64cabb054d81252b3f3e2d9c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_serverPort: 18418
-  gameServerPortNumber: 7777
+  m_serverBroadcastListenPort: 47777
+  m_ActiveDiscoverySecondInterval: 3
 --- !u!1 &1458789072
 GameObject:
   m_ObjectHideFlags: 0

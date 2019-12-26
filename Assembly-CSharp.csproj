@@ -53,8 +53,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Mirror\NetworkDiscovery\NetworkDiscovery.cs" />
-     <Compile Include="Assets\Mirror\NetworkDiscovery\NetworkDiscoveryHUD.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Data\DiscoveryInfo.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Data\GameBroadcastPacket.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\NetworkDiscovery.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Utility\ByteStreamer.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Utility\IPAddressUtility.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Utility\NetworkDiscoveryHUD.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Utility\NetworkDiscoveryUtility.cs" />
      <None Include="Assets\Mirror\Readme.txt" />
      <None Include="Assets\Mirror\License.txt" />
  <Reference Include="Unity.TextMeshPro.Editor">
