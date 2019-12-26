@@ -296,11 +296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 991ed27b36cc3c244b9e83f6f985b2c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawGUI: 1
-  offsetX: 5
-  offsetY: 150
-  width: 500
-  height: 400
   refreshInterval: 3
 --- !u!114 &1657536776
 MonoBehaviour:
@@ -388,7 +383,7 @@ MonoBehaviour:
   serverTickRate: 30
   showDebugMessages: 0
   offlineScene: 
-  onlineScene: 
+  onlineScene: SampleScene
   transport: {fileID: 1657536778}
   networkAddress: localhost
   maxConnections: 4

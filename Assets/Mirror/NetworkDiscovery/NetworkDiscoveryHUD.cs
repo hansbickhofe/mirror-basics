@@ -53,7 +53,7 @@ namespace Mirror {
 
         void ConnectToFirstServer () {
             print ("ConnectToFirstServer");
-
+            Connect (m_discoveredServers[0]);
         }
 
         void DisconnectFromGame () {
