@@ -21,10 +21,12 @@ namespace Mirror {
 
         void OnEnable () {
             NetworkDiscovery.onReceivedServerResponse += OnDiscoveredServer;
+            print ("add server");
         }
 
         void OnDisable () {
             NetworkDiscovery.onReceivedServerResponse -= OnDiscoveredServer;
+            print ("del server");
         }
 
         void Awake () {
@@ -37,6 +39,7 @@ namespace Mirror {
             if (!NetworkDiscovery.SupportedOnThisPlatform) {
                 return;
             }
+            m_discoveredServers.Clear ();
         }
 
         void Update () {
@@ -45,7 +48,23 @@ namespace Mirror {
             if (Input.GetKeyDown ("1")) ConnectServer (1);
             if (Input.GetKeyDown ("2")) ConnectServer (2);
             if (Input.GetKeyDown ("3")) ConnectServer (3);
-            if (Input.GetKeyDown ("d")) DisconnectFromGame ();
+            if (Input.GetKeyDown ("x")) DisconnectFromGame ();
+        }
+
+        void StartBroadcast () {
+            int serverNum = (Random.Range (0, 4));
+            m_discoveredServers.Clear ();
+
+            // Wire in broadcaster pipeline here
+            GameBroadcastPacket gameBroadcastPacket = new GameBroadcastPacket ();
+
+            gameBroadcastPacket.serverAddress = NetworkManager.singleton.networkAddress;
+            gameBroadcastPacket.port = ((TelepathyTransport) Transport.activeTransport).port;
+            gameBroadcastPacket.hostName = m_gameName[serverNum];
+            gameBroadcastPacket.serverGUID = NetworkDiscovery.instance.serverId;
+
+            byte[] broadcastData = ByteStreamer.StreamToBytes (gameBroadcastPacket);
+            NetworkDiscovery.instance.ServerPassiveBroadcastGame (broadcastData);
         }
 
         void StartServer () {
@@ -76,55 +95,56 @@ namespace Mirror {
 
         void DisconnectFromGame () {
             print ("DisconnectFromGame");
-            if (!NetworkServer.active) NetworkManager.singleton.StopClient ();
-            else NetworkManager.singleton.StopHost ();
             m_discoveredServers.Clear ();
+            if (NetworkClient.active) {
+                NetworkManager.singleton.StopClient ();
+                // NetworkDiscovery.instance.StopAllCoroutines ();
+            } 
+            else if (NetworkServer.active) {
+                NetworkManager.singleton.StopHost ();
+            }
+
         }
 
-        public void DisplayServers () {
-            foreach (var info in m_discoveredServers.Values) {
-                string hostline = "Gameinfo: " + info.EndPoint.Address.ToString ();
-                for (int i = 1; i < m_headerNames.Length; i++) {
-                    if (i == 0) {
-                        hostline += " ";
-                        hostline += info.unpackedData.serverAddress;
-                    } else {
-                        hostline += " ";
-                        hostline += info.unpackedData.hostName;
+            public void DisplayServers () {
+                foreach (var info in m_discoveredServers.Values) {
+                    string hostline = "Gameinfo: " + info.EndPoint.Address.ToString ();
+                    for (int i = 1; i < m_headerNames.Length; i++) {
+                        if (i == 0) {
+                            hostline += " ";
+                            hostline += info.unpackedData.serverAddress;
+                        } else {
+                            hostline += " ";
+                            hostline += info.unpackedData.hostName;
+                        }
+                        print (hostline);
                     }
-                    print (hostline);
                 }
-            }
-        }
-
-        public void Refresh () {
-            m_discoveredServers.Clear ();
-            NetworkDiscovery.instance.ClientRunActiveDiscovery ();
-        }
-
-
-        void Connect (DiscoveryInfo info) {
-            if (NetworkManager.singleton == null ||
-                Transport.activeTransport == null) {
-                return;
-            }
-            if (!(Transport.activeTransport is TelepathyTransport)) {
-                Debug.LogErrorFormat ("Only {0} is supported", typeof (TelepathyTransport));
-                return;
+                m_discoveredServers.Clear ();
             }
 
-            // assign address and port
-            NetworkManager.singleton.networkAddress = info.EndPoint.Address.ToString ();
-            ((TelepathyTransport) Transport.activeTransport).port = (ushort) info.unpackedData.port;
+            void Connect (DiscoveryInfo info) {
+                if (NetworkManager.singleton == null ||
+                    Transport.activeTransport == null) {
+                    return;
+                }
+                if (!(Transport.activeTransport is TelepathyTransport)) {
+                    Debug.LogErrorFormat ("Only {0} is supported", typeof (TelepathyTransport));
+                    return;
+                }
 
-            NetworkManager.singleton.StartClient ();
-        }
+                // assign address and port
+                NetworkManager.singleton.networkAddress = info.EndPoint.Address.ToString ();
+                ((TelepathyTransport) Transport.activeTransport).port = (ushort) info.unpackedData.port;
 
-        void OnDiscoveredServer (DiscoveryInfo info) {
-            // Note that you can check the versioning to decide if you can connect to the server or not using this method
-            m_discoveredServers[info.unpackedData.serverGUID] = info;
+                NetworkManager.singleton.StartClient ();
+            }
+
+            void OnDiscoveredServer (DiscoveryInfo info) {
+                // Note that you can check the versioning to decide if you can connect to the server or not using this method
+                m_discoveredServers[info.unpackedData.serverGUID] = info;
+            }
+
         }
 
     }
-
-}
