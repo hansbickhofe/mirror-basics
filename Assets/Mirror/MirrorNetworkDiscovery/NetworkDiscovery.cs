@@ -25,7 +25,7 @@ namespace Mirror {
 
         // Change the text to make your game distinct from any other network traffic (this is the signature)
         [HideInInspector]
-        public byte[] handshakeData { get; set; } = ByteStreamer.StreamToBytes("IAmAnExperimentalTeapotWith6FacetsOfTruth");
+        public byte[] handshakeData { get; set; } = ByteStreamer.StreamToBytes("ExploretheUniverse");
 
         // This is the port the server will listen on and the port the client will multi-cast on
         [SerializeField]
@@ -63,7 +63,7 @@ namespace Mirror {
                 return false;
             }
 
-            StopDiscovery();
+            // StopDiscovery();
 
             try {
                 // Setup port

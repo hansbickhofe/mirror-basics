@@ -58,8 +58,11 @@
      <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\NetworkDiscovery.cs" />
      <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Utility\ByteStreamer.cs" />
      <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Utility\IPAddressUtility.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Utility\MyNetworkDiscoveryHUD.cs" />
      <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Utility\NetworkDiscoveryHUD.cs" />
      <Compile Include="Assets\Mirror\MirrorNetworkDiscovery\Utility\NetworkDiscoveryUtility.cs" />
+     <Compile Include="Assets\Mirror\MirrorNetworkDiscovery-fork\NetworkDiscovery.cs" />
+     <Compile Include="Assets\scripts\PlayerController.cs" />
      <None Include="Assets\Mirror\Readme.txt" />
      <None Include="Assets\Mirror\License.txt" />
  <Reference Include="Unity.TextMeshPro.Editor">
