@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirror", "Mirror.csproj", "{D3E3FD12-0518-367E-223F-5134C4D75850}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninja.WebSockets", "Ninja.WebSockets.csproj", "{74BACBFD-37A5-46FC-6C18-0B9A5BEEB5ED}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirror.Examples", "Mirror.Examples.csproj", "{FB887B9F-31D1-3CBE-CC35-0EE1FD7D949F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{0886FB40-4130-4767-4C45-F9EEEB4B4051}"
@@ -27,6 +29,10 @@ Global
 		{D3E3FD12-0518-367E-223F-5134C4D75850}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3E3FD12-0518-367E-223F-5134C4D75850}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3E3FD12-0518-367E-223F-5134C4D75850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74BACBFD-37A5-46FC-6C18-0B9A5BEEB5ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74BACBFD-37A5-46FC-6C18-0B9A5BEEB5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74BACBFD-37A5-46FC-6C18-0B9A5BEEB5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74BACBFD-37A5-46FC-6C18-0B9A5BEEB5ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB887B9F-31D1-3CBE-CC35-0EE1FD7D949F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FB887B9F-31D1-3CBE-CC35-0EE1FD7D949F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB887B9F-31D1-3CBE-CC35-0EE1FD7D949F}.Release|Any CPU.ActiveCfg = Release|Any CPU
