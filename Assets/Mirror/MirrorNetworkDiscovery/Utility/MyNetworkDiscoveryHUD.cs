@@ -14,6 +14,9 @@ namespace Mirror {
 
         public NetworkManager manager;
 
+        public bool isServer = false;
+        public bool isClient = false;
+
         public int offsetX = 5;
         public int offsetY = 150;
         public int width = 500, height = 400;
@@ -50,12 +53,25 @@ namespace Mirror {
         }
 
         void Update () {
-            if (Input.GetKeyDown ("s")) StartServer ();
+            if (NetworkClient.active) print ("client active");
+            if (Input.GetKeyDown ("x")) {
+                DisconnectFromGame ();
+            }
+
+            if (NetworkServer.active) {
+                print ("Server active");
+                return;
+            }
+
+            if (Input.GetKeyDown ("s") && !NetworkClient.active) {
+                StartServer ();
+            }
+
             if (Input.GetKeyDown ("l")) DisplayServers ();
-            if (Input.GetKeyDown ("1")) ConnectServer (1);
-            if (Input.GetKeyDown ("2")) ConnectServer (2);
-            if (Input.GetKeyDown ("3")) ConnectServer (3);
-            if (Input.GetKeyDown ("x")) DisconnectFromGame ();
+
+            if (Input.GetKeyDown ("1") && !NetworkClient.active) {
+                ConnectServer (1);
+            }
         }
 
         void StartServer () {
@@ -92,23 +108,24 @@ namespace Mirror {
                 if (NetworkClient.active) {
                     NetworkManager.singleton.StopClient ();
                     NetworkManager.singleton.StopServer ();
-                    Destroy (GameObject.Find ("*NetMgr"));
-                    SceneManager.LoadScene ("OfflineScene");
-                    // NetworkManager.singleton.ServerChangeScene ("OfflineScene");
+                    // Destroy (GameObject.Find ("*NetMgr"));
+                    // SceneManager.LoadScene ("OfflineScene");
+                    NetworkManager.singleton.ServerChangeScene ("OfflineScene");
 
                 } else if (NetworkServer.active) {
                     NetworkManager.singleton.StopServer ();
-                    Destroy (GameObject.Find ("*NetMgr"));
-                    // NetworkManager.singleton.ServerChangeScene ("OfflineScene");
-                    SceneManager.LoadScene ("OfflineScene");
+                    // Destroy (GameObject.Find ("*NetMgr"));
+                    //SceneManager.LoadScene ("OfflineScene");
+                    NetworkManager.singleton.ServerChangeScene ("OfflineScene");
 
                 }
 
             }
         }
 
-        public void DisplayServers () {
-            if (!NetworkDiscovery.instance) return;
+        public void DisplayServers () {            
+            NetworkDiscovery.instance.ClientRunActiveDiscovery ();
+            print ("start discovery");
             foreach (var info in m_discoveredServers.Values) {
                 string hostline = "Gameinfo: " + info.EndPoint.Address.ToString ();
                 for (int i = 1; i < m_headerNames.Length; i++) {
